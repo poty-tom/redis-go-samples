@@ -1,0 +1,17 @@
+services:
+  redis-server:
+    container_name: redis-server
+    image: redis:latest
+    ports:
+      - "16379:6379"
+    networks:
+      - redis-network
+  redis-client:
+    container_name: redis-client
+    image: redis:latest
+    depends_on:
+      - redis-server
+    networks:
+      - redis-network
+networks:
+  redis-network:
