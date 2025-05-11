@@ -78,6 +78,22 @@ LRANGE timeline 0 -1
 ZADD key [NX(キーがないなら) | XX(キーがあるなら)] [GT(grater than) | LT(less than)] score membera
 ```
 
+# その他機能
+## pub/sub機能
+pub/sub機能も提供しており、
+チャットルームにおけるメッセージをpublisherが送信し、
+各subscriberがそれを受け取るような仕組みが作れる。
+※websocketとredisを組み合わせることで、異なるサーバーに接続したユーザーが同一のチャットルームにおけるメッセージを同期するような仕組みが作れる（redisのpub/sub機能による同期を図ることでAPIサーバ側をスケール可能な構成として作れる）
+
+```
+// SUBSCRIBERは購読対象のチャンネルを選択
+SUBSCRIBE channel1 channel2 channel3
+> Reading messages...
+
+// PUBLISHERはチャンネルへメッセージを送る
+PUBLISH channnel1 "hello world"
+> (integer) 1
+```
 
 # 付録
 ## キー名の命名規則
